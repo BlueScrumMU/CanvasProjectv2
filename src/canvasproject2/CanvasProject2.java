@@ -16,15 +16,7 @@ import javafx.stage.Stage;
  * @author rewil
  */
 public class CanvasProject2 extends Application {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        launch(args);
-    }
-
+    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
@@ -34,5 +26,15 @@ public class CanvasProject2 extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        launch(args);
+//        CanvasInterface canvas = new CanvasInterface();
+    }
+
     
 }
