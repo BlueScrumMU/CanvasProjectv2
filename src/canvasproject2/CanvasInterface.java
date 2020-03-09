@@ -22,25 +22,17 @@ import java.util.logging.Logger;
 public class CanvasInterface {
     
     private final CanvasApiFactory canvas = new CanvasApiFactory("https://manchester.instructure.com");
-    private final String accessToken = "4633~y8cN7aTlZEvq0BA0dASsQ0ZxoyrZ918rq9FbtFASVeohhpMeqfjReBKT8EUwF2Ro";
-    private final NonRefreshableOauthToken token = new NonRefreshableOauthToken(accessToken);
+    private String accessToken = "4633~y8cN7aTlZEvq0BA0dASsQ0ZxoyrZ918rq9FbtFASVeohhpMeqfjReBKT8EUwF2Ro";
+    private NonRefreshableOauthToken token = new NonRefreshableOauthToken(accessToken);
     private final String courseID = "6574";
     private final String userID = "6343";
     
     public CanvasInterface() {
-//        try{
-//            CourseInterface ci = new CourseInterface(canvas, token, courseID);
-//            String regex = "[A-Z]{2}[0-9]{2}.*";
-//            ci.selectByPattern(regex);
-//            for(Assignment a : ci.getSelectedAssignments()) {
-//                System.out.println(a.getName());
-//            }
-//            ci.clearSelectedDates();
-//            ci.flushAssignments();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//            System.exit(1);
+        
+    }
+    public CanvasInterface(String accessToken) {
+        this.accessToken = accessToken;
+        token = new NonRefreshableOauthToken(accessToken);
     }
     
     /**
