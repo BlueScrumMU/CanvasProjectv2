@@ -11,8 +11,6 @@ import edu.ksu.canvas.oauth.NonRefreshableOauthToken;import edu.ksu.canvas.reque
 import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 ;
 
 /**
@@ -28,7 +26,23 @@ public class CanvasInterface {
     private final String userID = "6343";
     
     public CanvasInterface() {
-        
+//        try {
+//            CourseInterface ci = new CourseInterface(canvas, token, courseID);
+//            for(Assignment a : ci.getAssignments()) {
+//                System.out.println(a.getName() + " - " + a.getCourseId());
+//                System.out.println(a.getDescription());
+//            }
+            
+//            Assignment a = new Assignment();
+//            a.setName("Code-Created Assignment");
+//            a.setDescription("This was made through the API");
+//            
+//            ci.createAssignment(a);
+//            System.exit(1);
+//            
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
     }
     public CanvasInterface(String accessToken) {
         this.accessToken = accessToken;
