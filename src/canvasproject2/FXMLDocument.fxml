@@ -13,6 +13,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#setOauth" text="Change Oauth" />
+                  <MenuItem mnemonicParsing="false" onAction="#createAssignment" text="Add Assignment in Course" />
             </items>
           </Menu>
         </menus>

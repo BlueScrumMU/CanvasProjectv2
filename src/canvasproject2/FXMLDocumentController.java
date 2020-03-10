@@ -47,6 +47,7 @@ public class FXMLDocumentController implements Initializable {
     //<editor-fold desc="Course List">
     
     List<Course> courses = null;
+    String courseID = "";
     List<Assignment> assignments = null;
     
     public void setCourseList() {
@@ -58,6 +59,7 @@ public class FXMLDocumentController implements Initializable {
                 items.add(c.getName() + " - " + c.getId());
             }
 
+            courseID = "";
             courseCombo.setItems(items);
             courseCombo.setValue(null);
             assignmentCombo.setValue(null);
@@ -69,6 +71,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML public void listAssignments() {
         try {
             CourseInterface ci = canvas.getCourseInterface("" + courses.get(courseCombo.getItems().indexOf(courseCombo.getValue())).getId());
+            courseID = "" + ci.getID();
             ObservableList<String> items = FXCollections.observableArrayList();
             assignments = ci.getAssignments();
             for(Assignment a : assignments) {
@@ -143,6 +146,37 @@ public class FXMLDocumentController implements Initializable {
             userID = "";
         }
         setCourseList();
+    }
+    
+    //</editor-fold>
+  //------------------------------------------------------------------------------------
+    //<editor-fold desc="Assignment Creation">
+    
+    private Stage creatorStage = new Stage();
+    private AssignmentWindow.FXMLDocumentController creatorController = null;
+    
+    public void openAssignmentCreator() {
+        FXMLLoader creatorLoader = new FXMLLoader(AssignmentWindow.AssignmentWindow.class.getResource("FXMLDocument.fxml"));
+        try {
+            Parent root = creatorLoader.load();
+            creatorController = (AssignmentWindow.FXMLDocumentController) creatorLoader.getController();
+            creatorController.setStage(creatorStage);
+            creatorStage.setScene(new Scene(root));
+            creatorStage.setTitle("Assignment Creator");
+            creatorStage.setAlwaysOnTop(true);
+            creatorStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML public void createAssignment() {
+        if(courseID.isEmpty()) return;
+        
+        openAssignmentCreator();
+        Assignment a = creatorController.getAssignment();
+        CourseInterface ci = canvas.getCourseInterface(courseID);
+        ci.createAssignment(a);
     }
     
     //</editor-fold>
