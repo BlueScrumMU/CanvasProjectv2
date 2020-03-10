@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="617.0" prefWidth="559.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="AssaignmentWindow.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="617.0" prefWidth="559.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="AssignmentWindow.FXMLDocumentController">
    <children>
       <Label layoutX="107.0" layoutY="83.0" prefHeight="26.0" prefWidth="80.0" text="Course Title: " />
       <Label layoutX="107.0" layoutY="144.0" prefHeight="26.0" prefWidth="80.0" text="Start Date: " />
