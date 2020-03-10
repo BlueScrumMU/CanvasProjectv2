@@ -6,10 +6,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="canvasproject2.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="canvasproject2.FXMLDocumentController">
    <children>
-      <ListView fx:id="courseList" layoutX="14.0" layoutY="12.0" prefHeight="377.0" prefWidth="200.0" />
-      <Button layoutX="362.0" layoutY="132.0" mnemonicParsing="false" onAction="#setOauth" text="Oauth" />
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="724.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#setOauth" text="Change Oauth" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ComboBox fx:id="courseCombo" layoutX="24.0" layoutY="40.0" onAction="#listAssignments" prefHeight="31.0" prefWidth="676.0" promptText="Courses" />
+      <ComboBox fx:id="assignmentCombo" layoutX="24.0" layoutY="80.0" onAction="#viewAssignment" prefHeight="31.0" prefWidth="676.0" promptText="Assignments" />
+      <TextField fx:id="nameField" editable="false" layoutX="24.0" layoutY="138.0" prefHeight="31.0" prefWidth="522.0" promptText="Course Name" />
+      <TextField fx:id="idField" editable="false" layoutX="585.0" layoutY="138.0" prefHeight="31.0" prefWidth="115.0" promptText="Course ID" />
+      <TextArea fx:id="bodyArea" editable="false" layoutX="24.0" layoutY="187.0" prefHeight="212.0" prefWidth="676.0" promptText="Course Body" wrapText="true" />
+      <TextField fx:id="startField" editable="false" layoutX="24.0" layoutY="425.0" prefHeight="31.0" prefWidth="219.0" promptText="Start Date" />
+      <TextField fx:id="dueField" editable="false" layoutX="253.0" layoutY="425.0" prefHeight="31.0" prefWidth="219.0" promptText="Due Date" />
+      <TextField fx:id="endField" editable="false" layoutX="481.0" layoutY="425.0" prefHeight="31.0" prefWidth="219.0" promptText="End Date" />
    </children>
 </AnchorPane>
