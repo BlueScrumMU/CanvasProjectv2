@@ -57,10 +57,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML ListView agmtsMEList;
     
     @FXML CheckBox enablePublishMECheck;
+    @FXML CheckBox enableDatePushMECheck;
     
-    @FXML DatePicker startMEDate;
-    @FXML DatePicker dueMEDate;
-    @FXML DatePicker lockMEDate;
+    @FXML TextField datePushMEField;
+    @FXML TextField groupIDMEField;
+    @FXML TextField regexMEField;
     
     @FXML CheckBox publishMECheck;
     //</editor-fold>
@@ -96,16 +97,6 @@ public class FXMLDocumentController implements Initializable {
             items.add(assignmentsME.get(i));
         }
         for(Assignment a : items) {
-            try{
-                a.setUnlockAt(convertLocalToDate(startMEDate.getValue()));
-            } catch (Exception e) {e.printStackTrace();}
-            try{
-                a.setDueAt(convertLocalToDate(dueMEDate.getValue()));
-            } catch (Exception e) {e.printStackTrace();}
-            try{
-                a.setLockAt(convertLocalToDate(lockMEDate.getValue()));
-            } catch (Exception e) {e.printStackTrace();}
-            
             if(enablePublishMECheck.isSelected()) {
                 a.setPublished(publishMECheck.isSelected());
             }
@@ -113,8 +104,38 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    private Date convertLocalToDate(LocalDate ld) {
-        return Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    @FXML public void selectAllAssignmentsME() {
+        agmtsMEList.getSelectionModel().selectAll();
+    }
+    
+    @FXML public void selectGroupIDAssignmentsME() {
+        clearSelection();
+        List<Assignment> items = new ArrayList<>();
+        for(Assignment a : assignmentsME) {
+            if(a.getGroupCategoryId().equals(groupIDMEField.getText())) {
+                items.add(a);
+            }
+        }
+        for(Assignment a : items) {
+            agmtsMEList.getSelectionModel().select(assignmentsME.indexOf(a));
+        }
+    }
+    
+    @FXML public void selectRegexAssignmentsME() {
+        clearSelection();
+        List<Assignment> items = new ArrayList<>();
+        for(Assignment a : assignmentsME) {
+            if(a.getName().matches(regexMEField.getText())) {
+                items.add(a);
+            }
+        }
+        for(Assignment a : items) {
+            agmtsMEList.getSelectionModel().select(assignmentsME.indexOf(a));
+        }
+    }
+    
+    @FXML public void clearSelection() {
+        agmtsMEList.getSelectionModel().clearSelection();
     }
     
     //</editor-fold> 

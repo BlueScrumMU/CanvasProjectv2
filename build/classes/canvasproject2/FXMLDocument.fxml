@@ -66,18 +66,22 @@
                      <children>
                         <ComboBox fx:id="courseMECombo" layoutX="13.0" layoutY="14.0" onAction="#listAssignmentsME" prefHeight="31.0" prefWidth="699.0" promptText="Courses" />
                         <ListView fx:id="agmtsMEList" layoutX="14.0" layoutY="60.0" prefHeight="331.0" prefWidth="200.0" />
-                        <DatePicker fx:id="startMEDate" layoutX="330.0" layoutY="111.0" />
-                        <DatePicker fx:id="dueMEDate" layoutX="330.0" layoutY="152.0" />
-                        <DatePicker fx:id="lockMEDate" layoutX="330.0" layoutY="197.0" />
-                        <Label layoutX="562.0" layoutY="116.0" text="Start Date" />
-                        <Label layoutX="562.0" layoutY="157.0" text="Due Date" />
-                        <Label layoutX="564.0" layoutY="202.0" text="Lock Date" />
-                        <CheckBox fx:id="enablePublishMECheck" layoutX="294.0" layoutY="266.0" mnemonicParsing="false" />
-                        <CheckBox fx:id="publishMECheck" layoutX="330.0" layoutY="266.0" mnemonicParsing="false" text="Published" />
-                        <Label layoutX="242.0" layoutY="255.0" text="Enable" />
-                        <Label alignment="CENTER" layoutX="241.0" layoutY="277.0" prefHeight="20.0" prefWidth="47.0" text="Set" textAlignment="CENTER" />
-                        <Button layoutX="346.0" layoutY="347.0" mnemonicParsing="false" onAction="#pushME" prefHeight="31.0" prefWidth="127.0" text="Push" />
-                        <Separator layoutX="319.0" layoutY="59.0" orientation="VERTICAL" prefHeight="243.0" prefWidth="5.0" />
+                        <CheckBox fx:id="enablePublishMECheck" layoutX="232.0" layoutY="105.0" mnemonicParsing="false" />
+                        <CheckBox fx:id="publishMECheck" layoutX="285.0" layoutY="105.0" mnemonicParsing="false" text="Published" />
+                        <Label layoutX="224.0" layoutY="62.0" text="Enable" />
+                        <Button layoutX="376.0" layoutY="341.0" mnemonicParsing="false" onAction="#pushME" prefHeight="31.0" prefWidth="127.0" text="Push" />
+                        <Separator layoutX="274.0" layoutY="60.0" orientation="VERTICAL" prefHeight="175.0" prefWidth="4.0" />
+                        <CheckBox fx:id="enableDatePushMECheck" layoutX="232.0" layoutY="148.0" mnemonicParsing="false" />
+                        <TextField fx:id="datePushMEField" layoutX="285.0" layoutY="143.0" prefHeight="31.0" prefWidth="54.0" />
+                        <Label layoutX="345.0" layoutY="148.0" text="Date Push in Days" />
+                        <Separator layoutX="474.0" layoutY="56.0" orientation="VERTICAL" prefHeight="175.0" prefWidth="4.0" />
+                        <Button layoutX="562.0" layoutY="95.0" mnemonicParsing="false" onAction="#selectAllAssignmentsME" text="Select All" />
+                        <Button layoutX="485.0" layoutY="149.0" mnemonicParsing="false" onAction="#selectGroupIDAssignmentsME" text="Select from Group" />
+                        <Button layoutX="485.0" layoutY="192.0" mnemonicParsing="false" onAction="#selectRegexAssignmentsME" text="Select from Regex" />
+                        <TextField fx:id="groupIDMEField" layoutX="630.0" layoutY="149.0" prefHeight="31.0" prefWidth="81.0" promptText="Group ID" />
+                        <TextField fx:id="regexMEField" layoutX="630.0" layoutY="192.0" prefHeight="31.0" prefWidth="82.0" promptText="Regex" />
+                        <Label layoutX="528.0" layoutY="62.0" text="Assignment Selections" />
+                        <Button layoutX="544.0" layoutY="262.0" mnemonicParsing="false" onAction="#clearSelection" text="Clear Selection" />
                      </children>
                   </AnchorPane>
             </content>
