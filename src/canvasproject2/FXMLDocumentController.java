@@ -7,8 +7,13 @@ package canvasproject2;
 
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.assignment.Assignment;
+import edu.ksu.canvas.model.assignment.AssignmentDate;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -18,7 +23,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -29,7 +39,8 @@ import javafx.stage.Stage;
  * @author rewil
  */
 public class FXMLDocumentController implements Initializable {
-
+    
+    //<editor-fold desc="Assignment View Vars">
     @FXML ComboBox courseCombo;
     @FXML ComboBox assignmentCombo;
     
@@ -39,16 +50,80 @@ public class FXMLDocumentController implements Initializable {
     @FXML TextField startField;
     @FXML TextField dueField;
     @FXML TextField endField;
+    //</editor-fold>
+    
+    //<editor-fold desc="Mass Edit Vars">
+    @FXML ComboBox courseMECombo;
+    @FXML ListView agmtsMEList;
+    
+    @FXML CheckBox enablePublishMECheck;
+    
+    @FXML DatePicker startMEDate;
+    @FXML DatePicker dueMEDate;
+    @FXML DatePicker lockMEDate;
+    
+    @FXML CheckBox publishMECheck;
+    //</editor-fold>
     
     private CanvasInterface canvas = new CanvasInterface();
     private String userID = "";
     
   //------------------------------------------------------------------------------------
-    //<editor-fold desc="Course List">
+    //<editor-fold desc="Mass edit">
+    
+    String courseIDME = "";
+    List<Assignment> assignmentsME = null;
+    
+    @FXML public void listAssignmentsME() {
+        try {
+            CourseInterface ci = canvas.getCourseInterface("" + courses.get(courseMECombo.getItems().indexOf(courseMECombo.getValue())).getId());
+            courseIDME = "" + ci.getID();
+            ObservableList<String> items = FXCollections.observableArrayList();
+            assignmentsME = ci.getAssignments();
+            for(Assignment a : assignmentsME) {
+                items.add(a.getName());
+            }
+            agmtsMEList.setItems(items);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML public void pushME() {
+        ArrayList<Assignment> items = new ArrayList<>();
+        for(Object o : agmtsMEList.getSelectionModel().getSelectedIndices()) {
+            int i = (Integer) o;
+            items.add(assignmentsME.get(i));
+        }
+        for(Assignment a : items) {
+            try{
+                a.setUnlockAt(convertLocalToDate(startMEDate.getValue()));
+            } catch (Exception e) {e.printStackTrace();}
+            try{
+                a.setDueAt(convertLocalToDate(dueMEDate.getValue()));
+            } catch (Exception e) {e.printStackTrace();}
+            try{
+                a.setLockAt(convertLocalToDate(lockMEDate.getValue()));
+            } catch (Exception e) {e.printStackTrace();}
+            
+            if(enablePublishMECheck.isSelected()) {
+                a.setPublished(publishMECheck.isSelected());
+            }
+            canvas.flushAssignment(a);
+        }
+    }
+    
+    private Date convertLocalToDate(LocalDate ld) {
+        return Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+    
+    //</editor-fold> 
+  //------------------------------------------------------------------------------------
+    //<editor-fold desc="Assignment View">
     
     List<Course> courses = null;
-    String courseID = "";
-    List<Assignment> assignments = null;
+    String courseIDAV = "";
+    List<Assignment> assignmentsAV = null;
     
     public void setCourseList() {
         try {
@@ -59,8 +134,9 @@ public class FXMLDocumentController implements Initializable {
                 items.add(c.getName() + " - " + c.getId());
             }
 
-            courseID = "";
+            courseIDAV = "";
             courseCombo.setItems(items);
+            courseMECombo.setItems(items);
             courseCombo.setValue(null);
             assignmentCombo.setValue(null);
         } catch (Exception e) {
@@ -71,10 +147,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML public void listAssignments() {
         try {
             CourseInterface ci = canvas.getCourseInterface("" + courses.get(courseCombo.getItems().indexOf(courseCombo.getValue())).getId());
-            courseID = "" + ci.getID();
+            courseIDAV = "" + ci.getID();
             ObservableList<String> items = FXCollections.observableArrayList();
-            assignments = ci.getAssignments();
-            for(Assignment a : assignments) {
+            assignmentsAV = ci.getAssignments();
+            for(Assignment a : assignmentsAV) {
                 items.add(a.getName());
             }
             assignmentCombo.setItems(items);
@@ -85,7 +161,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML public void viewAssignment() {
         try {
-            Assignment a = assignments.get(assignmentCombo.getItems().indexOf(assignmentCombo.getValue()));
+            Assignment a = assignmentsAV.get(assignmentCombo.getItems().indexOf(assignmentCombo.getValue()));
             nameField.setText(a.getName());
             idField.setText("" + a.getId());
             bodyArea.setText(a.getDescription());
@@ -171,12 +247,13 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML public void createAssignment() {
-        if(courseID.isEmpty()) return;
+        if(courseIDAV.isEmpty()) return;
         
         openAssignmentCreator();
         Assignment a = creatorController.getAssignment();
-        CourseInterface ci = canvas.getCourseInterface(courseID);
+        CourseInterface ci = canvas.getCourseInterface(courseIDAV);
         ci.createAssignment(a);
+        listAssignments();
     }
     
     //</editor-fold>
@@ -189,6 +266,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         setCourseList();
+        agmtsMEList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }    
     
 }

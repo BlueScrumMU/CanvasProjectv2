@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 public class FXMLDocumentController implements Initializable {
 
     private Stage stage = null;
-    private ZoneId defaultZoneId = ZoneId.systemDefault();
     private Assignment a = new Assignment();
     
     @FXML TextField titleField;
@@ -40,9 +39,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     public void createAsgnBtn(){
         a.setName(titleField.getText());
-        a.setUnlockAt(Date.from(startDateField.getValue().atStartOfDay(defaultZoneId).toInstant()));
-        a.setLockAt(Date.from(endDateField.getValue().atStartOfDay(defaultZoneId).toInstant()));
-        a.setDueAt(Date.from(dueDateField.getValue().atStartOfDay(defaultZoneId).toInstant()));
+        a.setUnlockAt(convertLocalToDate(startDateField.getValue()));
+        a.setLockAt(convertLocalToDate(endDateField.getValue()));
+        a.setDueAt(convertLocalToDate(dueDateField.getValue()));
         a.setDescription(descAreaField.getText());
                      
        stage.close(); 
@@ -56,7 +55,9 @@ public class FXMLDocumentController implements Initializable {
         return a;
     }
     
-    
+    private Date convertLocalToDate(LocalDate ld) {
+        return Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
     
     /**
      * Initializes the controller class.

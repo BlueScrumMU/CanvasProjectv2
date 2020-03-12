@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="canvasproject2.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="477.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="canvasproject2.FXMLDocumentController">
    <children>
       <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="724.0">
         <menus>
@@ -18,13 +18,71 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ComboBox fx:id="courseCombo" layoutX="24.0" layoutY="40.0" onAction="#listAssignments" prefHeight="31.0" prefWidth="676.0" promptText="Courses" />
-      <ComboBox fx:id="assignmentCombo" layoutX="24.0" layoutY="80.0" onAction="#viewAssignment" prefHeight="31.0" prefWidth="676.0" promptText="Assignments" />
-      <TextField fx:id="nameField" editable="false" layoutX="24.0" layoutY="138.0" prefHeight="31.0" prefWidth="522.0" promptText="Course Name" />
-      <TextField fx:id="idField" editable="false" layoutX="585.0" layoutY="138.0" prefHeight="31.0" prefWidth="115.0" promptText="Course ID" />
-      <TextArea fx:id="bodyArea" editable="false" layoutX="24.0" layoutY="187.0" prefHeight="212.0" prefWidth="676.0" promptText="Course Body" wrapText="true" />
-      <TextField fx:id="startField" editable="false" layoutX="24.0" layoutY="425.0" prefHeight="31.0" prefWidth="219.0" promptText="Start Date" />
-      <TextField fx:id="dueField" editable="false" layoutX="253.0" layoutY="425.0" prefHeight="31.0" prefWidth="219.0" promptText="Due Date" />
-      <TextField fx:id="endField" editable="false" layoutX="481.0" layoutY="425.0" prefHeight="31.0" prefWidth="219.0" promptText="End Date" />
+      <TabPane layoutY="30.0" prefHeight="441.0" prefWidth="724.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Assignments">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="startField" editable="false" layoutX="14.0" layoutY="361.0" prefHeight="31.0" prefWidth="219.0" promptText="Start Date">
+                           <tooltip>
+                              <Tooltip text="Start Date" />
+                           </tooltip>
+                        </TextField>
+                        <TextField fx:id="dueField" editable="false" layoutX="253.0" layoutY="361.0" prefHeight="31.0" prefWidth="219.0" promptText="Due Date">
+                           <tooltip>
+                              <Tooltip text="Due Date" />
+                           </tooltip>
+                        </TextField>
+                        <TextField fx:id="endField" editable="false" layoutX="491.0" layoutY="361.0" prefHeight="31.0" prefWidth="219.0" promptText="End Date">
+                           <tooltip>
+                              <Tooltip text="End Date" />
+                           </tooltip>
+                        </TextField>
+                        <TextArea fx:id="bodyArea" editable="false" layoutX="14.0" layoutY="138.0" prefHeight="212.0" prefWidth="698.0" promptText="Course Body" wrapText="true">
+                           <tooltip>
+                              <Tooltip text="Course Description" />
+                           </tooltip>
+                        </TextArea>
+                        <TextField fx:id="nameField" editable="false" layoutX="14.0" layoutY="96.0" prefHeight="31.0" prefWidth="522.0" promptText="Course Name">
+                           <tooltip>
+                              <Tooltip text="Course Name" />
+                           </tooltip>
+                        </TextField>
+                        <TextField fx:id="idField" editable="false" layoutX="595.0" layoutY="96.0" prefHeight="31.0" prefWidth="115.0" promptText="Course ID">
+                           <tooltip>
+                              <Tooltip text="Course ID" />
+                           </tooltip>
+                        </TextField>
+                        <ComboBox fx:id="assignmentCombo" layoutX="14.0" layoutY="54.0" onAction="#viewAssignment" prefHeight="31.0" prefWidth="698.0" promptText="Assignments" />
+                        <ComboBox fx:id="courseCombo" layoutX="14.0" layoutY="14.0" onAction="#listAssignments" prefHeight="31.0" prefWidth="699.0" promptText="Courses" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Mass Edit">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ComboBox fx:id="courseMECombo" layoutX="13.0" layoutY="14.0" onAction="#listAssignmentsME" prefHeight="31.0" prefWidth="699.0" promptText="Courses" />
+                        <ListView fx:id="agmtsMEList" layoutX="14.0" layoutY="60.0" prefHeight="331.0" prefWidth="200.0" />
+                        <DatePicker fx:id="startMEDate" layoutX="330.0" layoutY="111.0" />
+                        <DatePicker fx:id="dueMEDate" layoutX="330.0" layoutY="152.0" />
+                        <DatePicker fx:id="lockMEDate" layoutX="330.0" layoutY="197.0" />
+                        <Label layoutX="562.0" layoutY="116.0" text="Start Date" />
+                        <Label layoutX="562.0" layoutY="157.0" text="Due Date" />
+                        <Label layoutX="564.0" layoutY="202.0" text="Lock Date" />
+                        <CheckBox fx:id="enablePublishMECheck" layoutX="294.0" layoutY="266.0" mnemonicParsing="false" />
+                        <CheckBox fx:id="publishMECheck" layoutX="330.0" layoutY="266.0" mnemonicParsing="false" text="Published" />
+                        <Label layoutX="242.0" layoutY="255.0" text="Enable" />
+                        <Label alignment="CENTER" layoutX="241.0" layoutY="277.0" prefHeight="20.0" prefWidth="47.0" text="Set" textAlignment="CENTER" />
+                        <Button layoutX="346.0" layoutY="347.0" mnemonicParsing="false" onAction="#pushME" prefHeight="31.0" prefWidth="127.0" text="Push" />
+                        <Separator layoutX="319.0" layoutY="59.0" orientation="VERTICAL" prefHeight="243.0" prefWidth="5.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
