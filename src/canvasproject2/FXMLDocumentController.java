@@ -32,6 +32,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.time.DateUtils;
 
 /**
  * FXML Controller class
@@ -100,6 +101,9 @@ public class FXMLDocumentController implements Initializable {
             if(enablePublishMECheck.isSelected()) {
                 a.setPublished(publishMECheck.isSelected());
             }
+            if(enableDatePushMECheck.isSelected()) {
+                updateDates(a);
+            }
             canvas.flushAssignment(a);
         }
     }
@@ -137,6 +141,29 @@ public class FXMLDocumentController implements Initializable {
     @FXML public void clearSelection() {
         agmtsMEList.getSelectionModel().clearSelection();
     }
+    
+    private void updateDates(Assignment a){
+      
+       Integer numberOfDays;
+       
+       try {
+            numberOfDays = Integer.parseInt(datePushMEField.getText());
+       }
+       catch(Exception e){
+           return;
+       }
+      
+       
+       //update start date
+       a.setUnlockAt(DateUtils.addDays(a.getUnlockAt(),numberOfDays)); 
+       
+       //update lock date
+       a.setLockAt(DateUtils.addDays(a.getLockAt(),numberOfDays));
+       
+       //update due date
+       a.setDueAt(DateUtils.addDays(a.getDueAt(), numberOfDays));
+       
+   }
     
     //</editor-fold> 
   //------------------------------------------------------------------------------------
