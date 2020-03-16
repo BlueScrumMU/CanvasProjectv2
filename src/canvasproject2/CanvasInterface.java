@@ -5,12 +5,17 @@ import edu.ksu.canvas.CanvasApiFactory;
 import edu.ksu.canvas.interfaces.AssignmentReader;
 import edu.ksu.canvas.interfaces.AssignmentWriter;
 import edu.ksu.canvas.interfaces.CourseReader;
+import edu.ksu.canvas.interfaces.SubmissionReader;
 import edu.ksu.canvas.model.Course;
 import edu.ksu.canvas.model.assignment.Assignment;
+import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.oauth.NonRefreshableOauthToken;import edu.ksu.canvas.requestOptions.GetSingleAssignmentOptions;
+import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.ListUserCoursesOptions;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 ;
 
 /**
@@ -124,6 +129,24 @@ public class CanvasInterface {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Returns a list of Submissions for a given Assignment in the indicated Course. 
+     * Returns null if it fails. 
+     * @param courseID
+     * @param assignmentID
+     * @return 
+     */
+    public List<Submission> getSubmissionReader(String courseID, int assignmentID) {
+        SubmissionReader sr = canvas.getReader(SubmissionReader.class, token);
+        GetSubmissionsOptions gso = new GetSubmissionsOptions(courseID, assignmentID);
+        try {
+            return sr.getCourseSubmissions(gso);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
 }
